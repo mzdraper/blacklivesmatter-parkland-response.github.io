@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Display a map with a custom style</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+
+        .markerBLM {
+            background-image: url('black/blm.png');
+            background-size: cover;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+          }
+
+          .markerSDHS {
+            background-image: url('parkland/hs-logo.png');
+            background-size: cover;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+          }
+
+          .markerBlue {
+            background-image: url('all/all.png');
+            background-size: cover;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+          }
+
+          .markerALM {
+            background-image: url('blue/blue.png');
+            background-size: cover;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+          }
+
+          .mapboxgl-popup {
+            max-width: 370px;
+            height: 160px;
+          }
+    
+        .mapboxgl-popup-content {
+            text-align: center;
+            font-family: 'Courier';
+          }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+
+<script>
+
+mapboxgl.accessToken = 'pk.eyJ1IjoibWFkaXpoZW4iLCJhIjoiY2lzbTViZ2ozMDAyejJ5bzFxaXB0MXN2eCJ9.YVS0Rlj7IjNHireL_ysr6w';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/madizhen/cjfezavwj0i4e2so2tfy0z9iw', 
+    center: [-104.995221, 39.739718],
+    zoom: 3
+});
+ 
+var geojsonBLM =
+	{
+	    type: 'FeatureCollection',
+	    features: [{
+	        type: 'Feature',
+	        geometry: {
+	          type: 'Point',
+	          coordinates: [-81.786491, 32.420200] /* Coordiantes where your marker will appear. */
+	        },
+	        properties: {
+	          description: '<a href="https://twitter.com/marleyymee/status/752549191457595392" target="_blank"><img width="350" height="150" src="black/marleyymee.png"</a>'
+	        }
+	    },
+	    {
+	        type: 'Feature',
+	        geometry: {
+	          type: 'Point',
+	          coordinates: [-86.921206, 40.423664]
+	        },
+	        properties: {
+	          description: '<a href="https://twitter.com/rgay/status/966381473317117952"><img width="350" height="150" src="black/blm-roxane.png"</a>'
+	        }
+	    },
+	    {
+	        type: 'Feature',
+	        geometry: {
+	          type: 'Point',
+	          coordinates: [-76.638496, 39.300143]
+	        },
+	        properties: {
+	          description: '<a href="https://twitter.com/churchboy27/status/752476705038753792?ref_src=twsrc%5Etfw&ref_url=https%3A%2F%2Fwww.huffingtonpost.com%2Fentry%2F21-tweets-that-show-why-saying-all-lives-matter-is-bullst_us_5783d147e4b01edea78eda7e&tfw_creator=_tarynitup&tfw_site=blackvoices"><img width="350" height="150" src="black/blm-roxane.png"</a>'
+	        }
+	    }]
+	};
+
+var geojsonBlue =
+    {
+        type: 'FeatureCollection',
+        features: [{
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: []
+            },
+            properties: {
+              description: '<a href="https://twitter.com/rgay/status/966381473317117952"><img width="350" height="150" src="blm-roxane.png"</a>>'
+            }
+        },
+        {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: []
+            },
+            properties: {
+              description: '<a href="https://twitter.com/rgay/status/966381473317117952" target="_blank"><img width="350" height="150" src="blm-roxane.png"</a>'
+            }
+        }]
+    };
+
+var geojsonALM =
+    {
+        type: 'FeatureCollection',
+        features: [{
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [] /* Coordiantes where your marker will appear. */
+            },
+            properties: {
+              description: '<iframe src=\'//players.brightcove.net/293884104/SJa0Thl7_default/index.html?videoId=5718305469001\' allowfullscreen frameborder=0></iframe>'
+            }
+        },
+        {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: []
+            },
+            properties: {
+              description: '<a href="https://twitter.com/rgay/status/966381473317117952"><img width="350" height="150" src="blm-roxane.png"</a>'
+            }
+        }]
+    };
+
+
+var geojsonSDHS =
+    {
+        type: 'FeatureCollection',
+        features: [{
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [] /* Coordiantes where your marker will appear. */
+            },
+            properties: {
+              description: '<iframe src=\'//players.brightcove.net/293884104/SJa0Thl7_default/index.html?videoId=5718305469001\' allowfullscreen frameborder=0></iframe>'
+            }
+        },
+        {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: []
+            },
+            properties: {
+              description: '<a href="https://twitter.com/rgay/status/966381473317117952"><img width="350" height="150" src="blm-roxane.png"</a>'
+            }
+        }]
+    };
+
+geojsonBLM.features.forEach(function(marker) {
+
+  // create a HTML element for each feature
+  var el = document.createElement('div');
+  el.className = 'markerBLM';
+
+  // make a marker for each feature and add to the map
+new mapboxgl.Marker(el)
+  .setLngLat(marker.geometry.coordinates)
+  .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+  .setHTML('<p>' + marker.properties.description + '<p>'))
+  .addTo(map);
+});
+
+geojsonSDHS.features.forEach(function(marker) {
+
+  // create a HTML element for each feature
+  var el = document.createElement('div');
+  el.className = 'markerSDHS';
+
+  // make a marker for each feature and add to the map
+new mapboxgl.Marker(el)
+  .setLngLat(marker.geometry.coordinates)
+  .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+  .setHTML('<p>' + marker.properties.description + '<p>'))
+  .addTo(map);
+});
+
+geojsonALM.features.forEach(function(marker) {
+
+  // create a HTML element for each feature
+  var el = document.createElement('div');
+  el.className = 'markerALM';
+
+  // make a marker for each feature and add to the map
+new mapboxgl.Marker(el)
+  .setLngLat(marker.geometry.coordinates)
+  .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+  .setHTML('<p>' + marker.properties.description + '<p>'))
+  .addTo(map);
+});
+
+geojsonBlue.features.forEach(function(marker) {
+
+  // create a HTML element for each feature
+  var el = document.createElement('div');
+  el.className = 'markerBlue';
+
+  // make a marker for each feature and add to the map
+new mapboxgl.Marker(el)
+  .setLngLat(marker.geometry.coordinates)
+  .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+  .setHTML('<p>' + marker.properties.description + '<p>'))
+  .addTo(map);
+});
+
+</script>
+
+</body>
+</html>
